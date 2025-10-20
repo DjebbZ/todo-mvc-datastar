@@ -6,7 +6,7 @@ export const Todos = (props: TodoProps)=> html`
         ${props.todos?.map(todo => html`
             <div class="view">
                 <input class="toggle" type="checkbox" ${todo.completed ? 'checked' : ''}>
-                <label></label>
+                <label>${todo.title}</label>
                 <button class="destroy"></button>
             </div>
             <input class="edit" value="${todo.title}">
