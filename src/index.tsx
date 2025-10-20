@@ -1,10 +1,10 @@
 import {Hono} from 'hono'
-import {Layout} from "./templates";
+import Layout from "./templates/Layout";
 import {serveStatic} from "hono/bun";
 import {SiteData, Todo} from "./types";
 import {logger} from "hono/logger";
 import {SQL} from "bun"
-import {TodosPage} from "./templates/todos-page";
+import TodosPage from "./templates/TodosPage";
 
 const db = new SQL({
     adapter: "sqlite",

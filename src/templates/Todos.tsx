@@ -1,7 +1,7 @@
 import {html} from "hono/html";
 import {TodoProps} from "./prop-types";
 
-export const Todos = (props: TodoProps)=> html`
+const Todos = (props: TodoProps) => html`
     <ul class="todo-list">
         ${props.todos?.map(todo => html`
             <div class="view">
@@ -12,4 +12,6 @@ export const Todos = (props: TodoProps)=> html`
             <input class="edit" value="${todo.title}">
         `)}
     </ul>
-    `
+`
+
+export default Todos

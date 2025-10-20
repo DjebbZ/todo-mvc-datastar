@@ -2,8 +2,8 @@ import {html} from "hono/html";
 import {SiteData} from "../types";
 
 
-export const Layout = (props: SiteData) => html`
-<html lang="en">
+const Layout = (props: SiteData) => html`
+    <html lang="en">
     <head>
         <meta charset="UTF-8"/>
         <meta name="description" content="A Realtime collaborative TodoMVC written in Datastar and Bun+Hono."/>
@@ -11,8 +11,8 @@ export const Layout = (props: SiteData) => html`
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
         <title>${props.title}</title>
         <meta property="og:title" content="${props.title}"/>
-        <link rel="stylesheet" href="/static/base.css" />
-        <link rel="stylesheet" href="/static/index.css" />
+        <link rel="stylesheet" href="/static/base.css"/>
+        <link rel="stylesheet" href="/static/index.css"/>
         <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
@@ -49,5 +49,6 @@ export const Layout = (props: SiteData) => html`
             <button class="clear-completed">Clear completed</button>
             <% } %>
         </script>
-</html>
+    </html>
 `
+export default Layout

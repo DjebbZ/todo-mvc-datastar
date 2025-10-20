@@ -1,8 +1,8 @@
 import {html} from "hono/html";
-import {Todos} from "./todos";
+import Todos from "./Todos";
 import {TodoProps} from "./prop-types";
 
-export const TodosPage = (props: TodoProps) => html`
+const TodosPage = (props: TodoProps) => html`
     <section class="todoapp">
         <header class="header">
             <h1>todos</h1>
@@ -11,10 +11,13 @@ export const TodosPage = (props: TodoProps) => html`
         <main class="main">
             <div class="toggle-all-container">
                 <input class="toggle-all" id="toggle-all" type="checkbox"/>
-                <label for="toggle-all" aria-label="Mark all as complete" title="Mark all as complete">Mark all as complete</label>
+                <label for="toggle-all" aria-label="Mark all as complete" title="Mark all as complete">Mark all as
+                    complete</label>
             </div>
-            ${<Todos todos={props.todos} />}
+            ${<Todos todos={props.todos}/>}
         </main>
         <footer class="footer"></footer>
     </section>
 `
+
+export default TodosPage
