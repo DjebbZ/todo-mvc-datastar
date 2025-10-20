@@ -1,10 +1,12 @@
 import {Hono} from 'hono'
 import {Layout} from "./templates";
 import {serveStatic} from "hono/bun";
-import {SiteData} from "./templates/types";
+import {SiteData} from "./types";
+import {logger} from "hono/logger";
 
 const app = new Hono()
 
+app.use(logger())
 app.use('/static/*', serveStatic({ root: './src'}))
 
 app.get('/', (c) => {
