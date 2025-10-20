@@ -1,0 +1,12 @@
+{
+  "name": "real-time-todo-app-bun-datastar",
+  "scripts": {
+    "dev": "bun run --hot src/index.tsx"
+  },
+  "dependencies": {
+    "hono": "^4.10.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
