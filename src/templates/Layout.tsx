@@ -1,5 +1,5 @@
 import {html} from "hono/html";
-import {SiteData} from "../types";
+import {SiteData} from "../logic/types";
 
 
 const Layout = (props: SiteData) => html`

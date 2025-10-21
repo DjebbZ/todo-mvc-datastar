@@ -1,5 +1,5 @@
-import {Todo} from "../types";
+import {type Todo} from "../logic/types";
 
 export interface TodoProps {
-    todos: Todo[]
+    todos: TodoType[]
 }

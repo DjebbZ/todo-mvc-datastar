@@ -47,6 +47,17 @@ body {
     0 25px 50px 0 rgba(0, 0, 0, 0.1);
 }
 
+.todoapp input[type=submit] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
 .todoapp input::-webkit-input-placeholder {
     font-style: italic;
     font-weight: 400;
