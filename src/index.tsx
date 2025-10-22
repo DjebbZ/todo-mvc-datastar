@@ -3,9 +3,10 @@
 import {Hono} from 'hono'
 import Layout from "./templates/Layout";
 import {serveStatic} from "hono/bun";
-import {SiteData, Todo, TodoCreateDto} from "./logic/types";
+import {SiteData, Todo, TodoCreateDto, type TodoType} from "./logic/types";
 import {logger} from "hono/logger";
 import {Database} from "bun:sqlite"
+import {randomUUIDv7} from "bun"
 import TodosPage from "./templates/TodosPage";
 import {zValidator} from "@hono/zod-validator";
 
@@ -15,7 +16,7 @@ const db = new Database(":memory:", {
 db.run("PRAGMA journal_mode = WAL;")
 db.run(`CREATE TABLE IF NOT EXISTS todos
         (
-            id    TEXT PRIMARY KEY
+            id    TEXT PRIMARY KEY NOT NULL
                 CHECK (length(id) = 36 AND substr(id, 15, 1) = '7'), -- UUIDv7 format check
             title TEXT    NOT NULL
                 CHECK (length(title) >= 5 AND length(title) <= 50),
@@ -33,7 +34,9 @@ app.get('/', (c) => {
     }
 
     const query = db.query("SELECT * FROM todos")
-    const todos = query.all()
+    const todos: TodoType[] = query.all()
+
+    console.log({todos})
 
     return c.html(
         <Layout {...siteProps}>
@@ -44,10 +47,19 @@ app.get('/', (c) => {
 
 app.post('/todos', zValidator('form', TodoCreateDto), async (c) => {
     const {title} = c.req.valid("form");
+    const id = randomUUIDv7()
 
     const query =
-        db.query("INSERT INTO todos (title) VALUES ($title)")
-    query.run({$title: title})
+        db.query("INSERT INTO todos (id, title) VALUES ($id, $title)")
+    query.run({$title: title, $id: id})
+
+    return c.redirect("/")
+})
+
+app.delete('/todos/:id', zValidator('query', Todo.shape.id), async (c) => {
+    const id = c.req.valid('query')
+    const query = db.query("DELETE FROM todos WHERE id = $id")
+    query.run({$id: id})
 
     return c.redirect("/")
 })
