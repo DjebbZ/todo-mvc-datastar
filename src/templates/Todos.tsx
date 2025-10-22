@@ -6,9 +6,15 @@ const Todos = (props: TodoProps) => html`
         ${props.todos?.map(todo => html`
             <li>
                 <div class="view">
-                    <input class="toggle" type="checkbox" ${todo.done ? 'checked' : ''}>
-                    <label>${todo.title}</label>
-                    <form action="/todos/delete/${todo.id}" method="post"><button type="submit" class="destroy"></button></form>
+                    <form action="/todos/${todo.id}/toggle" method="post" class="todo-state-form">
+                        <input type="checkbox" id="toggle-${todo.id}" hidden aria-hidden="true" ${todo.done ? 'checked' : ''}>
+                        <button type="submit" class="toggle-todo "></button>
+                        <label for="toggle-${todo.id}">
+                            ${todo.title}
+                        </label>
+                    </form>
+                    
+                    <form action="/todos/${todo.id}/delete" method="post"><button type="submit" class="destroy"></button></form>
                 </div>
                 <input class="edit" value="${todo.title}">
             </li>

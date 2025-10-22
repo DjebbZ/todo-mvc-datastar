@@ -9,7 +9,7 @@ import {Database} from "bun:sqlite"
 import {randomUUIDv7} from "bun"
 import TodosPage from "./templates/TodosPage";
 import {zValidator} from "@hono/zod-validator";
-import {addTodo, deleteTodo, getTodos} from "./logic/todos_use-cases";
+import {addTodo, deleteTodo, getTodos, toggleTodo} from "./logic/todos_use-cases";
 import {setupDatabase} from "./logic/db";
 
 const db = setupDatabase(":memory:")
@@ -40,10 +40,15 @@ app.post('/todos', zValidator('form', TodoCreateDto), (c) => {
 })
 
 // HTML doesn't support DELETE, so we use a POST to delete a todo
-app.post('/todos/delete/:id', zValidator('param', Todo.pick({id: true})), (c) => {
+app.post('/todos/:id/delete', zValidator('param', Todo.pick({id: true})), (c) => {
     const id = c.req.valid('param').id
     deleteTodo(db, id)
     return c.redirect("/")
 })
 
+app.post('/todos/:id/toggle', zValidator('param', Todo.pick({id: true})), (c) => {
+    const id = c.req.valid('param').id
+    toggleTodo(db, id)
+    return c.redirect("/")
+})
 export default app

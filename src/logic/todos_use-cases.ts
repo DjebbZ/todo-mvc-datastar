@@ -19,3 +19,8 @@ export function deleteTodo(db: Database, id: string) {
     const query = db.query("DELETE FROM todos WHERE id = $id")
     query.run({$id: id})
 }
+
+export function toggleTodo(db: Database, id: string) {
+    const query = db.query("UPDATE todos SET done = NOT done WHERE id = $id")
+    query.run({$id: id})
+}
