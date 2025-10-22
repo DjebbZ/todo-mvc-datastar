@@ -39,7 +39,8 @@ app.post('/todos', zValidator('form', TodoCreateDto), (c) => {
     return c.redirect("/")
 })
 
-app.post('/todos/:id', zValidator('param', Todo.pick({id: true})), (c) => {
+// HTML doesn't support DELETE, so we use a POST to delete a todo
+app.post('/todos/delete/:id', zValidator('param', Todo.pick({id: true})), (c) => {
     const id = c.req.valid('param').id
     deleteTodo(db, id)
     return c.redirect("/")
