@@ -240,12 +240,29 @@ body {
     text-decoration: line-through;
 }
 
-.todo-list li .destroy {
+.view {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.todo-actions {
+    display: flex;
+    padding: 0 10px;
+}
+
+.todo-list li .edit-link {
+    &,
+    &:is(:active, :focus, :visited) {
+        text-decoration: none;
+        border: none;
+        line-height: 2rem;
+    }
+}
+
+.todo-list li .destroy,
+.todo-list li .edit-link {
     display: none;
-    position: absolute;
-    top: 0;
-    right: 10px;
-    bottom: 0;
     width: 40px;
     height: 40px;
     margin: auto 0;
@@ -254,8 +271,9 @@ body {
     transition: color 0.2s ease-out;
 }
 
-.todo-list li .destroy:hover,
-.todo-list li .destroy:focus {
+.todo-list li:hover :is(.destroy, .edit-link),
+.todo-list li :is(.destroy, .edit-link):focus {
+    display: block;
     color: var(--focused-red);
 }
 
@@ -264,14 +282,6 @@ body {
     display: block;
     height: 100%;
     line-height: 1.1;
-}
-
-.todo-list li:hover .destroy {
-    display: block;
-}
-
-.todo-list li .edit {
-    display: none;
 }
 
 .todo-list li.editing:last-child {
@@ -376,8 +386,8 @@ html .clear-completed:active {
 }
 
 /*
-	Hack to remove background from Mobile Safari.
-	Can't use it globally since it destroys checkboxes in Firefox
+    Hack to remove background from Mobile Safari.
+    Can't use it globally since it destroys checkboxes in Firefox
 */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     .toggle-all,
@@ -434,4 +444,6 @@ input[type="checkbox"]:checked + .toggle-todo::after {
     position: absolute;
     top: 0;
     left: 20%;
+}
+
 }

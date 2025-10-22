@@ -24,3 +24,8 @@ export function toggleTodo(db: Database, id: string) {
     const query = db.query("UPDATE todos SET done = NOT done WHERE id = $id")
     query.run({$id: id})
 }
+
+export function editTodo(db: Database, id: string, title: string) {
+    const query = db.query("UPDATE todos SET title = $title WHERE id = $id")
+    query.run({$title: title, $id: id})
+}
