@@ -56,8 +56,8 @@ app.post('/todos', zValidator('form', TodoCreateDto), async (c) => {
     return c.redirect("/")
 })
 
-app.delete('/todos/:id', zValidator('query', Todo.shape.id), async (c) => {
-    const id = c.req.valid('query')
+app.post('/todos/:id', zValidator('param', Todo.pick({id: true})), async (c) => {
+    const id = c.req.valid('param').id
     const query = db.query("DELETE FROM todos WHERE id = $id")
     query.run({$id: id})
 

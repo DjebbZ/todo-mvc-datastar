@@ -8,7 +8,7 @@ const Todos = (props: TodoProps) => html`
                 <div class="view">
                     <input class="toggle" type="checkbox" ${todo.done ? 'checked' : ''}>
                     <label>${todo.title}</label>
-                    <button class="destroy"></button>
+                    <form action="/todos/${todo.id}" method="post"><button type="submit" class="destroy"></button></form>
                 </div>
                 <input class="edit" value="${todo.title}">
             </li>
