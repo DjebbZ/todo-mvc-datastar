@@ -6,13 +6,12 @@ import {serveStatic} from "hono/bun";
 import {SiteData, Todo, TodoCreateDto, type TodoType} from "./logic/types";
 import {logger} from "hono/logger";
 import {Database} from "bun:sqlite"
-import {randomUUIDv7} from "bun"
 import TodosPage from "./templates/TodosPage";
 import {zValidator} from "@hono/zod-validator";
-import {addTodo, deleteTodo, getTodos, toggleTodo, editTodo} from "./logic/todos_use-cases";
+import {addTodo, deleteTodo, getTodos, toggleTodo, editTodo, toggleAll} from "./logic/todos_use-cases";
 import {setupDatabase} from "./logic/db";
 
-const db = setupDatabase(":memory:")
+const db: Database = setupDatabase(":memory:")
 
 const app = new Hono()
 
@@ -59,12 +58,11 @@ app.post('/todos/:id/toggle', zValidator('param', Todo.pick({id: true})), (c) =>
 app.post('/todos/:id/edit',
     zValidator('param', Todo.pick({id: true})),
     zValidator('form', Todo.pick({title: true})),
-        (c) => {
-            const id = c.req.param("id")
-            const {title} = c.req.valid('form')
-            console.log(id, title)
-            editTodo(db, id, title)
-            return c.redirect("/")
-        })
+    (c) => {
+        const id = c.req.param("id")
+        const {title} = c.req.valid('form')
+        editTodo(db, id, title)
+        return c.redirect("/")
+    })
 
 export default app

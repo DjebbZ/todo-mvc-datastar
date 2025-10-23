@@ -1,9 +1,8 @@
 import {html} from "hono/html";
 import Todos from "./Todos";
-import {TodoProps} from "./prop-types";
-import {MAX_TODO_LENGTH, MIN_TODO_LENGTH} from "../logic/constants";
+import {TodosProps} from "./prop-types";
 
-const TodosPage = (props: TodoProps) => html`
+const TodosPage = (props: TodosProps) => html`
     <section class="todoapp">
         <header class="header">
             <h1>todos</h1>
@@ -29,5 +28,7 @@ const TodosPage = (props: TodoProps) => html`
         <footer class="footer"></footer>
     </section>
 `
+
+import {MAX_TODO_LENGTH, MIN_TODO_LENGTH} from "../logic/constants";
 
 export default TodosPage

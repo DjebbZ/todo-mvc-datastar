@@ -2,5 +2,7 @@ import {type TodoType} from "../logic/types";
 
 export interface TodoProps {
     todos: TodoType[]
-    idToEdit?: Pick<TodoType, 'id'>
+    idToEdit?: TodoType['id']
 }
+
+export type TodosProps = TodoProps & {toggled?: boolean}
