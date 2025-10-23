@@ -4,6 +4,7 @@ import type { Database } from "bun:sqlite";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
+import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
 import { setupDatabase } from "./logic/db";
 import {
@@ -24,27 +25,28 @@ const app = new Hono();
 
 app.use(logger());
 app.use("/static/*", serveStatic({ root: "./src" }));
+app.use(
+	jsxRenderer(({ children }) => {
+		const siteProps: SiteData = {
+			title:
+				"TodoStar: Realtime collaborative TodoMVC written in Datastar and Bun+Hono.",
+		};
+		return <Layout title={siteProps.title}>{children}</Layout>;
+	}),
+);
 
 app.get(
 	"/",
 	zValidator("query", Todo.partial().pick({ id: true, done: true })),
 	(c) => {
 		const todos = getTodos(db);
-		const siteProps: SiteData = {
-			title:
-				"TodoStar: Realtime collaborative TodoMVC written in Datastar and Bun+Hono.",
-		};
 
 		const idToEdit = c.req.valid("query").id;
 		const toggled = c.req.valid("query").done;
 
 		console.log({ idToEdit, toggled });
 
-		return c.html(
-			<Layout {...siteProps}>
-				<TodosPage todos={todos} idToEdit={idToEdit} />
-			</Layout>,
-		);
+		return c.render(<TodosPage todos={todos} idToEdit={idToEdit} />);
 	},
 );
 
