@@ -1,11 +1,11 @@
-import {html} from "hono/html";
-import {TodoProps} from "./prop-types";
-import {TodoType} from "../logic/types";
+import { html } from "hono/html";
+import type { TodoType } from "../logic/types";
+import type { TodoProps } from "./prop-types";
 
-const TodoView = ({todo}: { todo: TodoType }) => html`
+const TodoView = ({ todo }: { todo: TodoType }) => html`
     <div class="view">
         <form action="/todos/${todo.id}/toggle" method="post" class="todo-state-form">
-            <input type="checkbox" id="toggle-${todo.id}" hidden aria-hidden="true" ${todo.done ? 'checked' : ''}>
+            <input type="checkbox" id="toggle-${todo.id}" hidden aria-hidden="true" ${todo.done ? "checked" : ""}>
             <button type="submit" class="toggle-todo "></button>
             <label for="toggle-${todo.id}">
                 ${todo.title}
@@ -18,24 +18,30 @@ const TodoView = ({todo}: { todo: TodoType }) => html`
             </form>
         </div>
     </div>
-`
+`;
 
-const TodoEdit = ({todo}: {todo: TodoType}) => html`
+const TodoEdit = ({ todo }: { todo: TodoType }) => html`
     <form action="/todos/${todo.id}/edit" method="post">
         <input class="edit" name="title" value="${todo.title}" autofocus/>
     </form>
-`
+`;
 
 const Todos = (props: TodoProps) => html`
     <ul class="todo-list">
-        ${props.todos?.map(todo => html`
+        ${props.todos?.map(
+					(todo) => html`
             <li>
-                ${todo.id === props.idToEdit ?
-                        <TodoEdit todo={todo} /> :
-                        <TodoView todo={todo} />}
+                ${
+									todo.id === props.idToEdit ? (
+										<TodoEdit todo={todo} />
+									) : (
+										<TodoView todo={todo} />
+									)
+								}
             </li>
-        `)}
+        `,
+				)}
     </ul>
-`
+`;
 
-export default Todos
+export default Todos;

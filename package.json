@@ -1,14 +1,15 @@
 {
-  "name": "real-time-todo-app-bun-datastar",
-  "scripts": {
-    "dev": "bun run --hot src/index.tsx"
-  },
-  "dependencies": {
-    "@hono/zod-validator": "^0.7.4",
-    "hono": "^4.10.1",
-    "zod": "^4.1.12"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  }
+	"name": "real-time-todo-app-bun-datastar",
+	"scripts": {
+		"dev": "bun run --hot src/index.tsx"
+	},
+	"dependencies": {
+		"@hono/zod-validator": "^0.7.4",
+		"hono": "^4.10.1",
+		"zod": "^4.1.12"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.2.7",
+		"@types/bun": "latest"
+	}
 }

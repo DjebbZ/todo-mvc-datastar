@@ -1,6 +1,5 @@
-import {html} from "hono/html";
-import {SiteData} from "../logic/types";
-
+import { html } from "hono/html";
+import type { SiteData } from "../logic/types";
 
 const Layout = (props: SiteData) => html`
     <!DOCTYPE html>
@@ -51,5 +50,5 @@ const Layout = (props: SiteData) => html`
             <% } %>
         </script>
     </html>
-`
-export default Layout
+`;
+export default Layout;
