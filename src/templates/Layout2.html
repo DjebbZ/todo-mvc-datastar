@@ -12,12 +12,9 @@
 			<h1>todos</h1>
 		</header>
 		<main>
-			<form class="todo-input" action="/todos" method="post">
-				<label for="toggleAll" aria-label="Toggle all todos"></label>
-				<input type="checkbox" id="toggleAll" name="toggleAll">
-				<label>
-					<input type="text" placeholder="What needs to be done?">
-				</label>
+			<form class="todo-input" action="/todos/toggleAll" method="post">
+				<button type="submit" class="toggleAll">❯</button>
+				<input type="text" placeholder="What needs to be done?" autofocus>
 			</form>
 			<div class="todo-item">
 				<form action="/todos/:id/toggle" method="post" class="todo-toggle">
@@ -29,9 +26,7 @@
 						name="completed"
 					>
 					<button type="submit"></button>
-					<label for="toggle-{id}" class="todo-content">
-						Create a TodoMVC template
-					</label>
+					<span>Create a TodoMVC template</span>
 				</form>
 				<form action="/todos/:id/edit" method="post" class="todo-edit">
 					<button type="submit">✎</button>
@@ -40,10 +35,10 @@
 					<button type="submit">ⓧ</button>
 				</form>
 			</div>
-			<div class="actions">
-				<p class="count">1 item left</p>
+			<div class="todo-actions-bar">
+				<span class="count">1 item left!</span>
 				<div class="filters">
-					<a href="/todos">All</a>
+					<a href="/todos" class="selected">All</a>
 					<a href="/todos?filter=active">Active</a>
 					<a href="/todos?filter=completed">Completed</a>
 				</div>

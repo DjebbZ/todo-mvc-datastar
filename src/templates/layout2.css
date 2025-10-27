@@ -1,8 +1,17 @@
 :root {
 	--main-color: #b83f45;
+	--focused-color: oklch(from var(--main-color) calc(l * 1.2) c h);
 	--border-color: lightgray;
-	--main-padding: 1rem;
+	--horizontal-padding: 1rem;
+	--vertical-padding: calc(var(--horizontal-padding) / 2);
 	--todo-padding: 0.5rem;
+	--action-padding: 0.25rem;
+	--thin-font-weight: 200;
+}
+
+*:focus {
+	outline: 0;
+	box-shadow: 0 0 2px 2px var(--focused-color);
 }
 
 body {
@@ -15,9 +24,12 @@ body {
 
 header {
 	font-size: 2rem;
-	font-weight: normal;
 	text-align: center;
 	color: var(--main-color);
+
+	h1 {
+		font-weight: var(--thin-font-weight);
+	}
 }
 
 main {
@@ -32,32 +44,24 @@ main {
 
 form.todo-input {
 	border-bottom: 1px solid var(--border-color);
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
 
-	label[for="toggleAll"] {
-		position: relative;
-		&::before {
-			position: absolute;
-			content: "❯";
-			rotate: 90deg;
-			left: 2rem;
-			bottom: 0;
-			top: 0;
-			font-size: 2rem;
-			color: hsl(from var(--border-color) h s calc(l - 20));
-		}
-	}
-
-	#toggleAll {
-		opacity: 0;
-		position: absolute;
-		left: -9999px;
+	.toggleAll {
+		rotate: 90deg;
+		border: none;
+		padding: var(--vertical-padding) var(--horizontal-padding);
+		font-size: 2rem;
+		background: none;
+		color: hsl(from var(--border-color) h s calc(l - 20));
 	}
 
 	input[type="text"] {
 		width: 100%;
 		border: 0;
 		font-size: 1.5rem;
-		padding: var(--main-padding) var(--main-padding) var(--main-padding) 4rem;
+		padding: var(--vertical-padding) var(--horizontal-padding);
 
 		&:focus {
 			outline: 0;
@@ -72,7 +76,7 @@ form.todo-input {
 }
 
 .todo-item {
-	padding: var(--main-padding);
+	padding: var(--vertical-padding) var(--horizontal-padding);
 	display: grid;
 	grid-template-columns: 1fr auto auto;
 	align-items: center;
@@ -116,4 +120,44 @@ form.todo-input {
 		opacity: 0;
 		transition: opacity 0.1s ease-in-out;
 	}
+}
+
+.todo-actions-bar {
+	padding: var(--vertical-padding) var(--horizontal-padding);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: var(--thin-font-weight);
+
+	button {
+		border: 1px solid transparent;
+		border-radius: var(--action-padding);
+		padding: var(--action-padding);
+		background: none;
+		cursor: pointer;
+		font-weight: var(--thin-font-weight);
+		color: inherit;
+		text-decoration: none;
+	}
+}
+
+.filters {
+	a {
+		border: 1px solid transparent;
+		text-decoration: none;
+		border-radius: var(--action-padding);
+		color: inherit;
+		padding: var(--action-padding);
+		&:hover {
+			border-color: oklch(from var(--focused-color) l c h / 70%);
+		}
+		&.selected {
+			border-color: var(--focused-color);
+		}
+	}
+}
+
+footer {
+	text-align: center;
+	font-weight: var(--thin-font-weight);
 }
