@@ -3,34 +3,31 @@ import type { TodoType } from "../logic/types.ts";
 import type { TodoProps } from "./prop-types.ts";
 
 const TodoView = ({ todo }: { todo: TodoType }) => html`
-    <div class="view">
-        <form action="/todos/${todo.id}/toggle" method="post" class="todo-state-form">
-            <input type="checkbox" id="toggle-${todo.id}" hidden aria-hidden="true" ${todo.done ? "checked" : ""}>
-            <button type="submit" class="toggle-todo "></button>
-            <label for="toggle-${todo.id}">
-                ${todo.title}
-            </label>
+    <article class="todo-item">
+        <form action="/todos/${todo.id}/toggle" method="post" class="todo-toggle">
+            <input type="checkbox" id="toggle-${todo.id}" hidden name="completed" ${todo.done ? "checked" : ""} aria-hidden="true"/>
+            <button type="submit"></button>
+            <span>${todo.title}</span>
         </form>
-        <div class="todo-actions">
-            <a href="/?id=${todo.id}" class="edit-link">✎</a>
-            <form action="/todos/${todo.id}/delete" method="post">
-                <button type="submit" class="destroy"></button>
-            </form>
-        </div>
-    </div>
+        <a href="/?id=${todo.id}" class="todo-edit-link">✎</a>
+        <form action="/todos/${todo.id}/delete" method="post" class="todo-delete">
+            <button type="submit">ⓧ</button>
+        </form>
+    </article>
 `;
 
 const TodoEdit = ({ todo }: { todo: TodoType }) => html`
-    <form action="/todos/${todo.id}/edit" method="post">
-        <input class="edit" name="title" value="${todo.title}" autofocus/>
-    </form>
+    <article class="todo-item">
+        <form action="/todos/${todo.id}/edit" method="post" class="todo-edit">
+            <input class="edit" name="title" value="${todo.title}"/>
+            
+        </form>
+    </article>
 `;
 
 const Todos = (props: TodoProps) => html`
-    <ul class="todo-list">
-        ${props.todos?.map(
-					(todo) => html`
-            <li>
+    ${props.todos?.map(
+			(todo) => html`
                 ${
 									todo.id === props.idToEdit ? (
 										<TodoEdit todo={todo} />
@@ -38,9 +35,8 @@ const Todos = (props: TodoProps) => html`
 										<TodoView todo={todo} />
 									)
 								}
-            </li>
-        `,
-				)}
+            `,
+		)}
     </ul>
 `;
 

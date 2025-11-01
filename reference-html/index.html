@@ -30,35 +30,50 @@
 			<h1>todos</h1>
 		</header>
 		<main>
-			<form class="todo-input" action="/todos/toggleAll" method="post">
-				<button type="submit" class="toggleAll">❯</button>
-				<input type="text" placeholder="What needs to be done?" autofocus>
-			</form>
+			<section class="todo-main">
+				<form class="todo-input" action="/todos/toggleAll" method="post">
+					<button type="submit" class="toggleAll">❯</button>
+				</form>
+				<form action="/todos" method="post" class="todo-input">
+					<input
+						type="text"
+						name="title"
+						minlength="5"
+						maxlength="50"
+						placeholder="What needs to be done?"
+					>
+					<input type="submit">
+				</form>
+			</section>
 			<article class="todo-item">
 				<form action="/todos/:id/toggle" method="post" class="todo-toggle">
 					<input
 						type="checkbox"
 						id="toggle-{id}"
 						hidden
-						aria-hidden="true"
 						name="completed"
+						aria-hidden="true"
 					>
 					<button type="submit"></button>
-					<span>Create a TodoMVC template</span>
+					<span>Something to be done</span>
 				</form>
-				<form action="/todos/:id/edit" method="post" class="todo-edit">
-					<button type="submit">✎</button>
-				</form>
+				<a href="/?id=${todo.id}" class="todo-edit-link">✎</a>
 				<form action="/todos/:id/delete" method="post" class="todo-delete">
 					<button type="submit">ⓧ</button>
+				</form>
+			</article>
+			<article class="todo-item">
+				<form action="/todos/:id/edit" method="post" class="todo-edit">
+					<input type="text" name="title" value="Something to be edited">
+					<input type="submit">
 				</form>
 			</article>
 			<section class="todo-actions-bar">
 				<span class="count">1 item left!</span>
 				<div class="filters">
-					<a href="/todos" class="selected">All</a>
-					<a href="/todos?filter=active">Active</a>
-					<a href="/todos?filter=completed">Completed</a>
+					<a href="/" class="selected">All</a>
+					<a href="/?filter=active">Active</a>
+					<a href="/?filter=completed">Completed</a>
 				</div>
 				<form action="/todos/clear" method="post">
 					<button type="submit">Clear completed</button>

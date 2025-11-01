@@ -13,8 +13,8 @@ const Layout = (props: PropsWithChildren<SiteData>) => (
 			<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 			<title>{props.title}</title>
 			<meta property="og:title" content="${props.title}" />
-			<link rel="stylesheet" href="/static/base.css" />
-			<link rel="stylesheet" href="/static/index.css" />
+			<link rel="stylesheet" href="/static/modern-normalize.css" />
+			<link rel="stylesheet" href="/static/styles.css" />
 			<link
 				rel="apple-touch-icon"
 				sizes="180x180"
@@ -36,40 +36,14 @@ const Layout = (props: PropsWithChildren<SiteData>) => (
 		</head>
 		<body>
 			{props.children}
-			<footer class="info">
-				<p>Double-click to edit a todo</p>
-				<p>Created by Khalid Jebbari, based on the work of the TodoMVC Team</p>
+			<footer>
+				<p>Open the page in multiple tabs and see what happens!</p>
+				<p>
+					Made with ❤️ and
+					<a href="https://www.data-star.dev">Datastar</a>
+					by Khalid Jebbari
+				</p>
 			</footer>
-			{/*<script type="text/template" id="item-template">*/}
-			{/*    <div class="view">*/}
-			{/*        <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>*/}
-			{/*        <label>*/}
-			{/*            <*/}
-			{/*            %- title %></label>*/}
-			{/*        <button class="destroy"></button>*/}
-			{/*    </div>*/}
-			{/*    <input class="edit" value="<%- title %>">*/}
-			{/*</script>*/}
-			{/*<script type="text/template" id="stats-template">*/}
-			{/*    <span class="todo-count"><strong><*/}
-			{/*        %= remaining %></strong> <*/}
-			{/*        %= remaining === 1 ? 'item' : 'items' %> left</span>*/}
-			{/*    <ul class="filters">*/}
-			{/*        <li>*/}
-			{/*            <a class="selected" href="#/">All</a>*/}
-			{/*        </li>*/}
-			{/*        <li>*/}
-			{/*            <a href="#/active">Active</a>*/}
-			{/*        </li>*/}
-			{/*        <li>*/}
-			{/*            <a href="#/completed">Completed</a>*/}
-			{/*        </li>*/}
-			{/*    </ul>*/}
-			{/*    <*/}
-			{/*    % if (completed) {%>*/}
-			{/*    <button class="clear-completed">Clear completed</button>*/}
-			{/*    <%} %>*/}
-			{/*</script>*/}
 		</body>
 	</html>
 );
