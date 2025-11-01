@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { MAX_TODO_LENGTH, MIN_TODO_LENGTH } from "./constants";
+import { MAX_TODO_LENGTH, MIN_TODO_LENGTH } from "./constants.ts";
 
 export interface SiteData {
 	title: string;

@@ -1,6 +1,6 @@
 import type { Database } from "bun:sqlite";
 import { randomUUIDv7 } from "bun";
-import type { TodoType } from "./types";
+import type { TodoType } from "./types.ts";
 
 export function addTodo(db: Database, title: string) {
 	const id = randomUUIDv7();

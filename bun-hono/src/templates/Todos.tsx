@@ -1,6 +1,6 @@
 import { html } from "hono/html";
-import type { TodoType } from "../logic/types";
-import type { TodoProps } from "./prop-types";
+import type { TodoType } from "../logic/types.ts";
+import type { TodoProps } from "./prop-types.ts";
 
 const TodoView = ({ todo }: { todo: TodoType }) => html`
     <div class="view">

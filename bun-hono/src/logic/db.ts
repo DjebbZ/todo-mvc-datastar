@@ -1,5 +1,5 @@
 import { Database } from "bun:sqlite";
-import { MAX_TODO_LENGTH, MIN_TODO_LENGTH } from "./constants";
+import { MAX_TODO_LENGTH, MIN_TODO_LENGTH } from "./constants.ts";
 
 type FilenameType = ConstructorParameters<typeof Database>[0];
 type OptionsType = ConstructorParameters<typeof Database>[1];

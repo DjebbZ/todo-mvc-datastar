@@ -6,7 +6,7 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
-import { setupDatabase } from "./logic/db";
+import { setupDatabase } from "./logic/db.ts";
 import {
 	addTodo,
 	deleteTodo,
@@ -14,10 +14,10 @@ import {
 	getTodos,
 	toggleAll,
 	toggleTodo,
-} from "./logic/todos_use-cases";
-import { type SiteData, Todo, TodoCreateDto } from "./logic/types";
-import Layout from "./templates/Layout";
-import TodosPage from "./templates/TodosPage";
+} from "./logic/todos_use-cases.ts";
+import { type SiteData, Todo, TodoCreateDto } from "./logic/types.ts";
+import Layout from "./templates/Layout.tsx";
+import TodosPage from "./templates/TodosPage.tsx";
 
 const db: Database = setupDatabase(":memory:");
 
