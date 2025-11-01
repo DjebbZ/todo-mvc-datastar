@@ -1,6 +1,6 @@
 import type { Database } from "bun:sqlite";
 import { randomUUIDv7 } from "bun";
-import type { TodoType } from "./types.ts";
+import type { TodosFilterType, TodoType } from "./types.ts";
 
 export function addTodo(db: Database, title: string) {
 	const id = randomUUIDv7();
@@ -11,8 +11,19 @@ export function addTodo(db: Database, title: string) {
 	query.run({ $title: title, $id: id });
 }
 
-export function getTodos(db: Database): TodoType[] {
-	const query = db.query<TodoType, []>("SELECT * FROM todos");
+export function getTodos(db: Database, filter: TodosFilterType): TodoType[] {
+	let sql = `SELECT * FROM todos`;
+	switch (filter) {
+		case "active":
+			sql += " WHERE done = 0";
+			break;
+		case "completed":
+			sql += " WHERE done = 1";
+			break;
+		default:
+			break;
+	}
+	const query = db.query<TodoType, []>(sql);
 	return query.all();
 }
 

@@ -15,7 +15,12 @@ import {
 	toggleAll,
 	toggleTodo,
 } from "./logic/todos_use-cases.ts";
-import { type SiteData, Todo, TodoCreateDto } from "./logic/types.ts";
+import {
+	type SiteData,
+	Todo,
+	TodoCreateDto,
+	TodosPageQuery,
+} from "./logic/types.ts";
 import Layout from "./templates/Layout.tsx";
 import TodosPage from "./templates/TodosPage.tsx";
 
@@ -35,20 +40,16 @@ app.use(
 	}),
 );
 
-app.get(
-	"/",
-	zValidator("query", Todo.partial().pick({ id: true, done: true })),
-	(c) => {
-		const todos = getTodos(db);
+app.get("/", zValidator("query", TodosPageQuery), (c) => {
+	const idToEdit = c.req.valid("query").id;
+	const filter = c.req.valid("query").filter;
 
-		const idToEdit = c.req.valid("query").id;
-		const toggled = c.req.valid("query").done;
+	const todos = getTodos(db, filter);
 
-		console.log({ idToEdit, toggled });
-
-		return c.render(<TodosPage todos={todos} idToEdit={idToEdit} />);
-	},
-);
+	return c.render(
+		<TodosPage todos={todos} idToEdit={idToEdit} filter={filter} />,
+	);
+});
 
 app.post("/todos", zValidator("form", TodoCreateDto), (c) => {
 	const { title } = c.req.valid("form");

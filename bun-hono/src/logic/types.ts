@@ -19,3 +19,13 @@ export const Todo = z.object({
 });
 
 export type TodoType = z.infer<typeof Todo>;
+
+const TodosFilter = z.enum(["all", "active", "completed"]).default("all");
+
+export const TodosPageQuery = z.object({
+	id: Todo.shape.id.optional(),
+	filter: TodosFilter,
+});
+
+export type TodosPageQueryType = z.infer<typeof TodosPageQuery>;
+export type TodosFilterType = z.infer<typeof TodosFilter>;
