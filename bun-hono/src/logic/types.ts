@@ -10,8 +10,6 @@ export const TodoCreateDto = z.object({
 	title: z.string().min(MIN_TODO_LENGTH).max(MAX_TODO_LENGTH),
 });
 
-export type TodoCreateDtoType = z.infer<typeof TodoCreateDto>;
-
 export const Todo = z.object({
 	...TodoCreateDto.shape,
 	id: z.uuidv7(),
@@ -27,5 +25,4 @@ export const TodosPageQuery = z.object({
 	filter: TodosFilter,
 });
 
-export type TodosPageQueryType = z.infer<typeof TodosPageQuery>;
 export type TodosFilterType = z.infer<typeof TodosFilter>;

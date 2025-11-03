@@ -78,12 +78,9 @@ app.post(
 	},
 );
 
-app.post("todos/toggle", zValidator("form", Todo.pick({ done: true })), (c) => {
-	const { done } = c.req.valid("form");
-	toggleAll(db, done);
-	const toggledURL = new URL("/");
-	toggledURL.search = `done=${done}`;
-	return c.redirect(toggledURL.toString());
+app.post("todos/toggleAll", (c) => {
+	toggleAll(db);
+	return c.redirect("/");
 });
 
 app.post(

@@ -59,6 +59,10 @@ section.todo-main {
 		background: none;
 		color: hsl(from var(--border-color) h s calc(l - 20));
 		cursor: pointer;
+
+		&.all-done {
+			color: var(--ok-color);
+		}
 	}
 
 	input[type="text"] {

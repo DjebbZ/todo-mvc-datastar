@@ -5,6 +5,9 @@ import Todos from "./Todos";
 const TodosPage = (props: TodosProps) => {
 	const todosLeft = props.todos.filter((t) => !t.done).length;
 	const todosLeftText = todosLeft <= 1 ? "item" : "items";
+	const atLeastOne = props.todos.length >= 1;
+	const allDone = todosLeft === 0;
+	const allDoneClasses = allDone ? "toggleAll all-done" : "toggleAll";
 
 	return (
 		<>
@@ -13,11 +16,21 @@ const TodosPage = (props: TodosProps) => {
 			</header>
 			<main>
 				<section className="todo-main">
-					<form className="todo-input" action="/todos/toggleAll" method="post">
-						<button type="submit" className="toggleAll">
-							❯
-						</button>
-					</form>
+					{atLeastOne && (
+						<form
+							className="todo-input"
+							action="/todos/toggleAll"
+							method="post"
+						>
+							<button
+								type="submit"
+								className={allDoneClasses}
+								title="Toggle all todos"
+							>
+								❯
+							</button>
+						</form>
+					)}
 					<form action="/todos" method="post" className="todo-input">
 						<input
 							type="text"
@@ -25,6 +38,7 @@ const TodosPage = (props: TodosProps) => {
 							placeholder="What needs to be done?"
 							minlength={MIN_TODO_LENGTH}
 							maxlength={MAX_TODO_LENGTH}
+							required
 						/>
 						<input type="submit" />
 					</form>
