@@ -59,3 +59,7 @@ export function editTodo(db: Database, id: string, title: string) {
 	);
 	query.run({ $title: title, $id: id });
 }
+
+export function clearCompleted(db: Database) {
+	db.query("DELETE FROM todos WHERE done = 1").run();
+}

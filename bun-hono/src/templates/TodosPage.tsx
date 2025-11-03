@@ -65,7 +65,7 @@ const TodosPage = (props: TodosProps) => {
 							Completed
 						</a>
 					</div>
-					<form action="/todos/clear" method="post">
+					<form action="/todos/clear-completed" method="post">
 						<button type="submit">Clear completed</button>
 					</form>
 				</section>

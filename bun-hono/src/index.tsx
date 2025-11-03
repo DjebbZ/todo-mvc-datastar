@@ -9,6 +9,7 @@ import { logger } from "hono/logger";
 import { setupDatabase } from "./logic/db.ts";
 import {
 	addTodo,
+	clearCompleted,
 	deleteTodo,
 	editTodo,
 	getTodos,
@@ -94,5 +95,10 @@ app.post(
 		return c.redirect("/");
 	},
 );
+
+app.post("/todos/clear-completed", (c) => {
+	clearCompleted(db);
+	return c.redirect("/");
+});
 
 export default app;

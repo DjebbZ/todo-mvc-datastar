@@ -39,9 +39,8 @@ const Layout = (props: PropsWithChildren<SiteData>) => (
 			<footer>
 				<p>Open the page in multiple tabs and see what happens!</p>
 				<p>
-					Made with ❤️ and
-					<a href="https://www.data-star.dev">Datastar</a>
-					by Khalid Jebbari
+					Made with ❤️ and&nbsp;<a href="https://www.data-star.dev">Datastar</a>
+					&nbsp;by Khalid Jebbari
 				</p>
 			</footer>
 		</body>
