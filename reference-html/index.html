@@ -32,7 +32,9 @@
 		<main>
 			<section class="todo-main">
 				<form class="todo-input" action="/todos/toggleAll" method="post">
-					<button type="submit" class="toggleAll">❯</button>
+					<button type="submit" class="toggleAll" title="Toggle all todos">
+						❯
+					</button>
 				</form>
 				<form action="/todos" method="post" class="todo-input">
 					<input
@@ -41,12 +43,17 @@
 						minlength="5"
 						maxlength="50"
 						placeholder="What needs to be done?"
+						required
 					>
 					<input type="submit">
 				</form>
 			</section>
 			<article class="todo-item">
-				<form action="/todos/:id/toggle" method="post" class="todo-toggle">
+				<form
+					action="/todos/${todo.id}/toggle"
+					method="post"
+					class="todo-toggle"
+				>
 					<input
 						type="checkbox"
 						id="toggle-{id}"
@@ -58,12 +65,16 @@
 					<span>Something to be done</span>
 				</form>
 				<a href="/?id=${todo.id}" class="todo-edit-link">✎</a>
-				<form action="/todos/:id/delete" method="post" class="todo-delete">
+				<form
+					action="/todos/${todo.id}/delete"
+					method="post"
+					class="todo-delete"
+				>
 					<button type="submit">ⓧ</button>
 				</form>
 			</article>
 			<article class="todo-item">
-				<form action="/todos/:id/edit" method="post" class="todo-edit">
+				<form action="/todos/${todo.id}/edit" method="post" class="todo-edit">
 					<input type="text" name="title" value="Something to be edited">
 					<input type="submit">
 				</form>
