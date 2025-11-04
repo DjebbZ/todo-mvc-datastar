@@ -26,6 +26,7 @@ const TodoEdit = ({ todo }: { todo: TodoType }) => html`
 `;
 
 const Todos = (props: TodoProps) => html`
+    <div id="todos">
     ${props.todos?.map(
 			(todo) => html`
                 ${
@@ -37,7 +38,7 @@ const Todos = (props: TodoProps) => html`
 								}
             `,
 		)}
-    </ul>
+    </div>
 `;
 
 export default Todos;

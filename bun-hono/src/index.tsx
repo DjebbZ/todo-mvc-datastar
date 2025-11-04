@@ -6,6 +6,8 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
+import { streamSSE } from "hono/streaming";
+import { ConnectedClients } from "./logic/connected-clients.tsx";
 import { setupDatabase } from "./logic/db.ts";
 import {
 	addTodo,
@@ -26,6 +28,7 @@ import Layout from "./templates/Layout.tsx";
 import TodosPage from "./templates/TodosPage.tsx";
 
 const db: Database = setupDatabase(":memory:");
+const connectedClients = new ConnectedClients(db);
 
 const app = new Hono();
 
@@ -52,9 +55,44 @@ app.get("/", zValidator("query", TodosPageQuery), (c) => {
 	);
 });
 
+app.get("/ds/todos", (c) => {
+	return streamSSE(
+		c,
+		async (stream) => {
+			const clientId = connectedClients.add(stream);
+			console.log(`Client ${clientId} connected`);
+
+			stream.onAbort(function removeClient() {
+				console.log(`Client ${clientId} disconnected`);
+				connectedClients.remove(clientId);
+			});
+
+			// Keep the stream alive with periodic heartbeats
+			// This allows the browser to signal disconnection via stream.abort()
+			while (true) {
+				await stream.writeSSE({
+					event: "heartbeat",
+					data: new Date().toISOString(),
+				});
+				await new Promise((resolve) => setTimeout(resolve, 30000)); // 30 second interval
+			}
+		},
+		async (err, stream) => {
+			console.error(`Error on stream for client ${stream}`, err);
+			stream.abort();
+		},
+	);
+});
+
 app.post("/todos", zValidator("form", TodoCreateDto), (c) => {
 	const { title } = c.req.valid("form");
 	addTodo(db, title);
+	const isDatastarRequest = c.req.header("datastar-request") === "true";
+
+	if (isDatastarRequest) {
+		connectedClients.broadcastTodos();
+		return c.text("", 201);
+	}
 	return c.redirect("/");
 });
 
@@ -101,4 +139,7 @@ app.post("/todos/clear-completed", (c) => {
 	return c.redirect("/");
 });
 
-export default app;
+export default {
+	fetch: app.fetch,
+	idleTimeout: 0,
+};

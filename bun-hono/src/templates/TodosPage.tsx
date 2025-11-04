@@ -11,8 +11,9 @@ const TodosPage = (props: TodosProps) => {
 
 	return (
 		<>
-			<header>
+			<header data-init="@get('ds/todos')">
 				<h1>todos</h1>
+				<p data-text="$counter"></p>
 			</header>
 			<main>
 				<section className="todo-main">
@@ -31,7 +32,12 @@ const TodosPage = (props: TodosProps) => {
 							</button>
 						</form>
 					)}
-					<form action="/todos" method="post" className="todo-input">
+					<form
+						action="/todos"
+						method="post"
+						className="todo-input"
+						data-on:submit="@post('/todos', {contentType: 'form'})"
+					>
 						<input
 							type="text"
 							name="title"

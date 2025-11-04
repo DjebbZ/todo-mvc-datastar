@@ -33,6 +33,10 @@ const Layout = (props: PropsWithChildren<SiteData>) => (
 				href="/static/favicon-16x16.png"
 			/>
 			<link rel="manifest" href="/static/site.webmanifest" />
+			<script
+				type="module"
+				src="https://cdn.jsdelivr.net/gh/starfederation/datastar@1.0.0-RC.6/bundles/datastar.js"
+			></script>
 		</head>
 		<body>
 			{props.children}

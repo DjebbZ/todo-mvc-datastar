@@ -11,7 +11,7 @@ export function addTodo(db: Database, title: string) {
 	query.run({ $title: title, $id: id });
 }
 
-export function getTodos(db: Database, filter: TodosFilterType): TodoType[] {
+export function getTodos(db: Database, filter?: TodosFilterType): TodoType[] {
 	let sql = `SELECT * FROM todos`;
 	switch (filter) {
 		case "active":
