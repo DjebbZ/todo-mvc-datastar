@@ -42,19 +42,20 @@ export function toggleTodo(db: Database, id: string) {
 }
 
 export function toggleAll(db: Database) {
-	const { allDone } = db
-		.query(`
+	const result = db
+		.query<{ allDone: boolean }, null>(`
         SELECT NOT EXISTS (
             SELECT 1 FROM todos WHERE done = 0
         ) AS allDone;
     `)
-		.get();
+		.get(null);
+	if (!result) return;
 	const query = db.query("UPDATE todos SET done = $toggle");
-	query.run({ $toggle: !allDone });
+	query.run({ $toggle: !result.allDone });
 }
 
 export function editTodo(db: Database, id: string, title: string) {
-	const query = db.query<never, { $title: typeof title; $id: typeof id }>(
+	const query = db.query<null, { $title: typeof title; $id: typeof id }>(
 		"UPDATE todos SET title = $title WHERE id = $id",
 	);
 	query.run({ $title: title, $id: id });
