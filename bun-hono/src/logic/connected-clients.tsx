@@ -1,5 +1,6 @@
 import type { Database } from "bun:sqlite";
 import { randomUUIDv7 } from "bun";
+import { renderToString } from "hono/jsx/dom/server";
 import type { SSEStreamingApi } from "hono/streaming";
 import Todos from "../templates/Todos.tsx";
 import { getTodos } from "./todos_use-cases.ts";
@@ -33,11 +34,15 @@ export class ConnectedClients {
 		this.clients.forEach(async (client) => {
 			console.log({
 				event: "datastar-patch-elements",
-				data: `elements {<Todos todos=${todos}>}`,
+				data: `elements ${renderToString(<Todos todos={todos} />)
+					.replaceAll("\n", "")
+					.trim()}`,
 			});
 			await client.stream.writeSSE({
 				event: "datastar-patch-elements",
-				data: `elements ${<Todos todos={todos} />}`,
+				data: `elements ${renderToString(<Todos todos={todos} />)
+					.replaceAll("\n", "")
+					.trim()}`,
 			});
 		});
 	}

@@ -10,8 +10,8 @@ const TodosPage = (props: TodosProps) => {
 	const allDoneClasses = allDone ? "toggleAll all-done" : "toggleAll";
 
 	return (
-		<>
-			<header data-init="@get('ds/todos')">
+		<div data-init="@get('ds/todos')">
+			<header>
 				<h1>todos</h1>
 				<p data-text="$counter"></p>
 			</header>
@@ -76,7 +76,7 @@ const TodosPage = (props: TodosProps) => {
 					</form>
 				</section>
 			</main>
-		</>
+		</div>
 	);
 };
 

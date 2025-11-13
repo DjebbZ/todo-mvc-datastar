@@ -27,8 +27,8 @@ const TodoEdit = ({ todo }: { todo: TodoType }) => html`
 
 const Todos = (props: TodoProps) => html`
     <div id="todos">
-    ${props.todos?.map(
-			(todo) => html`
+        ${props.todos?.map(
+					(todo) => html`
                 ${
 									todo.id === props.idToEdit ? (
 										<TodoEdit todo={todo} />
@@ -37,7 +37,7 @@ const Todos = (props: TodoProps) => html`
 									)
 								}
             `,
-		)}
+				)}
     </div>
 `;
 

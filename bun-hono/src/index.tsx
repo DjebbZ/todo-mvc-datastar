@@ -4,6 +4,7 @@ import type { Database } from "bun:sqlite";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
+import { renderToString } from "hono/jsx/dom/server";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
 import { streamSSE } from "hono/streaming";
@@ -25,6 +26,7 @@ import {
 	TodosPageQuery,
 } from "./logic/types.ts";
 import Layout from "./templates/Layout.tsx";
+import Todos from "./templates/Todos.tsx";
 import TodosPage from "./templates/TodosPage.tsx";
 
 const db: Database = setupDatabase(":memory:");
